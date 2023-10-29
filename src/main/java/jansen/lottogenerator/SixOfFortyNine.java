@@ -12,16 +12,16 @@ import jansen.lottogenerator.model.SixOfFortyNinePojo;
  */
 public class SixOfFortyNine {
 
-    private final int max = 49;
-    private final int min = 1;
-    private final int range = max - min + 1;
+    private static final int MAX = 49;
+    private static final int MIN = 1;
+    private static final int RANGE = MAX - MIN + 1;
 
     public SixOfFortyNinePojo CreateRow() {
         SixOfFortyNinePojo returnValue = new SixOfFortyNinePojo();
         int num[] = new int[6];
 
         for (int i = 0; i < 6; i++) {
-            num[i] = (int) (Math.random() * range) + min;
+            num[i] = (int) (Math.random() * RANGE) + MIN;
 
             // duplicate check
             for (int x = 0; x < i; x++) {

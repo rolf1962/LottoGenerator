@@ -12,9 +12,13 @@ import javax.persistence.*;
  * @author Rolf
  */
 @Entity
+@Table(name = "SixOfFortyNine")
 public class SixOfFortyNinePojo implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
     @Column(name = "Z1")

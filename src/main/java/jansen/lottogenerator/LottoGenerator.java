@@ -56,6 +56,7 @@ public class LottoGenerator {
             rows.add(sixOfFortyNine.CreateRow());
         }
 
+        // Zahlenreihen ausgeben und, wenn gewünscht in Datenbank speichern
         int i = 1;  // Zähler für die gespeicherte Zahlenreihen
         for (SixOfFortyNinePojo row : rows) {
             if (saveToDb) {

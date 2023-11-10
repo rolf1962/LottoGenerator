@@ -7,7 +7,8 @@ package jansen.lottogenerator;
 import jansen.lottogenerator.model.SixOfFortyNinePojo;
 
 /**
- *
+ * Klasse zur Erzeugung von Zahlenreihen (Lotto 6 aus 49). 
+ * @see jansen.lottogenerator.model.SixOfFortyNinePojo.SixOfFortyNinePojo
  * @author Rolf
  */
 public class SixOfFortyNine {
@@ -16,6 +17,11 @@ public class SixOfFortyNine {
     private static final int MIN = 1;
     private static final int RANGE = MAX - MIN + 1;
 
+    /**
+     * Erzeugt eine zufällige, sortierte Zahlenreihe ohne Duplikate
+     * 
+     * @return A row of @see jansen.lottogenerator.model.SixOfFortyNinePojo.SixOfFortyNinePojo
+     */
     public SixOfFortyNinePojo CreateRow() {
         SixOfFortyNinePojo returnValue = new SixOfFortyNinePojo();
         int num[] = new int[6];

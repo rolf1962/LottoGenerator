@@ -8,7 +8,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
- *
+ * Plain objekt für eine Zahlenreihe aus "Lotto 6 aus 49"
+ * Enthält Datenbank-Annotationen 
  * @author Rolf
  */
 @Entity

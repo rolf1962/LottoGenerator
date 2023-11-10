@@ -13,7 +13,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
- *
+ * Hibernate Utilities for configuration and database functions
  * @author Rolf
  */
 public class HibernateUtil {
@@ -52,6 +52,5 @@ public class HibernateUtil {
         session.beginTransaction();
         session.save(sixOfFortyNineRow);
         session.getTransaction().commit();
-
     }
 }

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Hauptprogramm des Lottozahlengenerators. Erzeugt wird die gewünschte Anzahl
@@ -19,10 +21,10 @@ import java.util.Arrays;
  */
 public class LottoGenerator {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         int t = 0;
         String s;
-        Boolean saveToDb = true;
+        Boolean saveToDb;// = true;
         HibernateUtil hibernateUtil = new HibernateUtil();
         ArrayList<SixOfFortyNinePojo> rows = new ArrayList<>();
         SixOfFortyNine sixOfFortyNine = new SixOfFortyNine();
@@ -40,15 +42,13 @@ public class LottoGenerator {
         br = new BufferedReader(new InputStreamReader(System.in));
         // Angabe, ob in die Datenbank gespeichert werden soll
         System.out.println("Soll in die Datenbank gespeichert werden (J/n)?");
-        try {
-            String[] no = {"N", "n"};
-            s = br.readLine();
-            if (Arrays.asList(no).contains(s)) {
-                saveToDb = false;
-            }
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
+//        try {
+        String[] no = {"N", "n"};
+        s = br.readLine();
+        saveToDb = !Arrays.asList(no).contains(s);
+//        } catch (IOException ex) {
+//            System.err.println(ex.getMessage());
+//        }
         System.out.println("****************");
 
         // Zahlenreihen erzeugen
@@ -56,14 +56,19 @@ public class LottoGenerator {
             rows.add(sixOfFortyNine.CreateRow());
         }
 
-        // Zahlenreihen ausgeben und, wenn gewünscht in Datenbank speichern
-        int i = 1;  // Zähler für die gespeicherte Zahlenreihen
-        for (SixOfFortyNinePojo row : rows) {
-            if (saveToDb) {
-                hibernateUtil.save(row);
+        CompletableFuture completableFuture = CompletableFuture.runAsync(() -> {
+            // Zahlenreihen ausgeben und, wenn gewünscht in Datenbank speichern
+            int i = 1;  // Zähler für die gespeicherte Zahlenreihen
+
+            for (SixOfFortyNinePojo row : rows) {
+                if (saveToDb) {
+                    hibernateUtil.save(row);
+                }
+                // Fortschrittanzeige
+                System.out.println(String.format("%07d\t\t%s", i++, row.toString()));
             }
-            // Fortschrittanzeige
-            System.out.println(String.format("%07d\t\t%s", i++, row.toString()));
-        }
+        });
+
+        completableFuture.get();
     }
 }
